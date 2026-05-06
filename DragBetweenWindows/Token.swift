@@ -23,7 +23,7 @@ struct Token: Identifiable, Hashable, Codable, Transferable {
     }
 
     static var transferRepresentation: some TransferRepresentation {
-        CodableRepresentation(contentType: .dragBetweenWindowsToken)
+        CodableRepresentation(contentType: .json)
     }
 
     static let starterPack: [Token] = [
@@ -38,10 +38,6 @@ struct Token: Identifiable, Hashable, Codable, Transferable {
         Token(name: "Violet",    hue: 0.78),
         Token(name: "Magenta",   hue: 0.88)
     ]
-}
-
-extension UTType {
-    static let dragBetweenWindowsToken = UTType(exportedAs: "me.fluharty.DragBetweenWindows.token")
 }
 
 @Observable
