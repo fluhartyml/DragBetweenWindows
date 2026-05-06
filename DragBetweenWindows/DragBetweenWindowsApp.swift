@@ -2,31 +2,22 @@
 //  DragBetweenWindowsApp.swift
 //  DragBetweenWindows
 //
-//  Created by Michael Fluharty on 5/2/26.
-//
 
 import SwiftUI
-import SwiftData
 
 @main
 struct DragBetweenWindowsApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
+    @State private var dropbox = Dropbox()
 
     var body: some Scene {
-        WindowGroup {
+        WindowGroup("Drag Between Windows", id: "source") {
             ContentView()
+                .environment(dropbox)
         }
-        .modelContainer(sharedModelContainer)
+
+        WindowGroup("Drop Window", id: "drop") {
+            DropWindowView()
+                .environment(dropbox)
+        }
     }
 }
